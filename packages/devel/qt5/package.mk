@@ -26,10 +26,10 @@ PKG_URL="http://download.qt.io/official_releases/qt/5.4/5.4.1/single/qt-everywhe
 
 case $PROJECT in
  Generic)
-  PKG_DEPENDS_TARGET="bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfig liberation-fonts-ttf font-util font-xfree86-type1 font-misc-misc alsa libICE libSM libXcursor libXtst pciutils"
+  PKG_DEPENDS_TARGET="bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfig liberation-fonts-ttf font-util font-xfree86-type1 font-misc-misc alsa libICE libSM libXcursor libXtst pciutils nss"
  ;;
  RPi)
-  PKG_DEPENDS_TARGET="bcm2835-driver bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfig liberation-fonts-ttf font-util font-xfree86-type1 font-misc-misc alsa libICE libSM libXcursor libXtst"
+  PKG_DEPENDS_TARGET="bcm2835-driver bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfig liberation-fonts-ttf font-util font-xfree86-type1 font-misc-misc alsa libICE libSM libXcursor libXtst nss"
  ;;
 esac
 
