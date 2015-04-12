@@ -26,5 +26,8 @@ mkpkg-temp
 # backup files
 *.orig
 
+# build log
+log_*.txt
+
 # crap
 .DS_Store
