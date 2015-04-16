@@ -16,13 +16,13 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #  ################################################################################
 
-PKG_NAME="qt5"
+PKG_NAME="qt5base"
 PKG_VERSION="5.4.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.4/5.4.1/single/qt-everywhere-opensource-src-5.4.1.tar.gz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.4/5.4.1/submodules/qtbase-opensource-src-5.4.1.tar.gz"
 
 case $PROJECT in
  Generic)
@@ -35,8 +35,8 @@ esac
 
 PKG_PRIORITY="optional"
 PKG_SECTION="lib"
-PKG_SHORTDESC="Qt GUI toolkit"
-PKG_LONGDESC="Qt GUI toolkit"
+PKG_SHORTDESC="Qt GUI toolkit base modules"
+PKG_LONGDESC="Qt GUI toolkit base modules"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -57,6 +57,12 @@ case $PROJECT in
        -optimized-qmake \
        -silent \
        -opengl \
+       -no-cups \
+       -shared \
+       -largefile \
+       -plugin-sql-mysql \
+       -no-sql-psql \
+       -system-sqlite \
        -make libs \
        -nomake examples \
        -nomake tests "
@@ -85,8 +91,8 @@ case $PROJECT in
 esac
 
 unpack() {
- tar -xzf $SOURCES/${PKG_NAME}/qt-everywhere-opensource-src-${PKG_VERSION}.tar.gz -C $BUILD/
- mv $BUILD/qt-everywhere-opensource-src-${PKG_VERSION} $BUILD/${PKG_NAME}-${PKG_VERSION}
+   tar -xzf $SOURCES/${PKG_NAME}/qtbase-opensource-src-${PKG_VERSION}.tar.gz -C $BUILD/
+   mv $BUILD/qtbase-opensource-src-${PKG_VERSION} $BUILD/${PKG_NAME}-${PKG_VERSION}
 }
 
 configure_target() {
