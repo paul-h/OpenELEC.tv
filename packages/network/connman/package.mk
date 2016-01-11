@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 PKG_NAME="connman"
 # DO NOT UPGRADE!!
-PKG_VERSION="1.23"
+PKG_VERSION="1.30"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -92,10 +92,14 @@ post_makeinstall_target() {
         -e "s|^# PreferredTechnologies.*|PreferredTechnologies = ethernet,wifi,cellular|g" \
         -e "s|^# TetheringTechnologies.*|TetheringTechnologies = wifi|g" \
         -e "s|^# AllowHostnameUpdates.*|AllowHostnameUpdates = false|g" \
-        -e "s|^# PersistentTetheringMode.*|PersistentTetheringMode = true|g"
+        -e "s|^# PersistentTetheringMode.*|PersistentTetheringMode = true|g" \
+        -e "s|^# NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb|NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,docker,veth|g"
 
   mkdir -p $INSTALL/usr/config
     cp $PKG_DIR/config/hosts.conf $INSTALL/usr/config
+
+  mkdir -p $INSTALL/usr/share/connman/
+    cp $PKG_DIR/config/settings $INSTALL/usr/share/connman/
 }
 
 post_install() {

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -47,8 +47,14 @@ if [ -n "$WINDOWMANAGER" -a "$WINDOWMANAGER" != "none" ]; then
 fi
 
 get_graphicdrivers
-# Drivers
+
+# Drivers 
+if [ -n "$LIBINPUT" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
-  for drv in $XORG_DRIVERS; do
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
-  done
+else
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev"
+fi
+
+for drv in $XORG_DRIVERS; do
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
+done

@@ -42,6 +42,8 @@
 
   # Configuration for u-boot
     UBOOT_CONFIG="mx6_cubox-i_config"
+    UBOOT_CONFIG="$UBOOT_CONFIG matrix"
+    UBOOT_CONFIG="$UBOOT_CONFIG udoo_config"
 
   # Target Configfile for u-boot
     UBOOT_CONFIGFILE=""
@@ -52,6 +54,8 @@
   # Kernel extra targets to build
     KERNEL_UBOOT_EXTRA_TARGET="imx6q-cubox-i.dtb imx6dl-cubox-i.dtb"
     KERNEL_UBOOT_EXTRA_TARGET="$KERNEL_UBOOT_EXTRA_TARGET imx6q-hummingboard.dtb imx6dl-hummingboard.dtb"
+    KERNEL_UBOOT_EXTRA_TARGET="$KERNEL_UBOOT_EXTRA_TARGET imx6q-tbs2910.dtb"
+    KERNEL_UBOOT_EXTRA_TARGET="$KERNEL_UBOOT_EXTRA_TARGET imx6q-udoo.dtb imx6dl-udoo.dtb"
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
@@ -113,6 +117,12 @@
 
   # Modules to install in initramfs for early boot
     INITRAMFS_MODULES=""
+
+  # additional drivers to install:
+  # for a list of additinoal drivers see packages/linux-drivers
+  # Space separated list is supported,
+  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
+    ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8188EU RTL8812AU dvbhdhomerun"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,

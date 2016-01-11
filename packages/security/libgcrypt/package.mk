@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libgcrypt"
-PKG_VERSION="1.6.3"
+PKG_VERSION="1.6.4"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnupg.org/"
-PKG_URL="ftp://ftp.gnupg.org/gcrypt/libgcrypt/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_LICENSE="GPLv2"
+PKG_SITE="https://www.gnupg.org/"
+PKG_URL="https://www.gnupg.org/ftp/gcrypt/libgcrypt/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libgpg-error"
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
@@ -32,11 +32,11 @@ PKG_LONGDESC="Libgcrypt is a general purpose cryptographic library based on the 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-asm --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--disable-asm --with-gnu-ld --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
-  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i src/libgcrypt-config
-  cp src/libgcrypt-config $ROOT/$TOOLCHAIN/bin
+  sed -e "s:\(['= ]\)\"/usr:\\1\"$SYSROOT_PREFIX/usr:g" -i src/$PKG_NAME-config
+  cp src/$PKG_NAME-config $SYSROOT_PREFIX/usr/bin
 
   rm -rf $INSTALL/usr/bin
 }

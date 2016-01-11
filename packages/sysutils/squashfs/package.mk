@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,8 +32,6 @@ PKG_LONGDESC="Squashfs is intended to be a general read-only filesystem, for arc
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-export LDFLAGS="$LDFLAGS -fwhole-program"
 
 make_host() {
   make -C squashfs-tools mksquashfs \

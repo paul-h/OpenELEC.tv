@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="nano"
-PKG_VERSION="2.4.0"
+PKG_VERSION="2.5.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -35,9 +35,11 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-utf8 \
                            --disable-nls"
 
-export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/ncurses"
-export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-export LIBS="$LIBS -lz"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/ncurses"
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  export LIBS="$LIBS -lz"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/nano

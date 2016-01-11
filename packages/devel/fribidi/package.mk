@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fribidi"
-PKG_VERSION="0.19.5"
+PKG_VERSION="0.19.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
@@ -42,13 +42,15 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --with-gnu-ld \
                            --without-glib"
 
-export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
-export CFLAGS="$CFLAGS -fPIC -DPIC"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}
 
 post_makeinstall_target() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp -f $PKG_DIR/scripts/fribidi-config $ROOT/$TOOLCHAIN/bin
-    chmod +x $ROOT/$TOOLCHAIN/bin/fribidi-config
+  mkdir -p $SYSROOT_PREFIX/usr/bin
+    cp -f $PKG_DIR/scripts/fribidi-config $SYSROOT_PREFIX/usr/bin
+    chmod +x $SYSROOT_PREFIX/usr/bin/fribidi-config
 
   rm -rf $INSTALL/usr/bin
 }

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libbdplus"
-PKG_VERSION="0.1.1"
+PKG_VERSION="0.1.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -35,6 +35,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-werror \
                            --disable-extra-warnings \
                            --disable-optimizations \
+                           --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr \
+                           --with-gpg-error-prefix=$SYSROOT_PREFIX/usr \
                            --with-gnu-ld"
 
 if [ "$BLURAY_AACS_SUPPORT" = "yes" ]; then

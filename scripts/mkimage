@@ -2,7 +2,7 @@
 
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
   OE_TMP=$(mktemp -d)
   LOOP=$(losetup -f)
 
-  SYSTEM_SIZE=256
+  SYSTEM_SIZE=512
   STORAGE_SIZE=32 # STORAGE_SIZE must be >= 32 !
 
   DISK_SIZE=$(( $SYSTEM_SIZE + $STORAGE_SIZE + 4 ))
@@ -64,15 +64,22 @@ trap cleanup SIGINT
 # write a disklabel
   echo "image: creating partition table on $DISK..."
   losetup "$LOOP" "$DISK"
-  parted -s "$LOOP" mklabel gpt
+  if [ "$BOOTLOADER" = "syslinux" ]; then
+    parted -s "$LOOP" mklabel gpt
+  else
+    parted -s "$LOOP" mklabel msdos
+  fi
   sync
 
 # create part1
   echo "image: creating part1 on $DISK..."
   SYSTEM_PART_END=$(( $SYSTEM_SIZE * 1024 * 1024 / 512 + 2048 ))
   parted -s "$LOOP" -a min unit s mkpart primary fat32 2048 $SYSTEM_PART_END
-  parted -s "$LOOP" set 1 legacy_boot on
-
+  if [ "$BOOTLOADER" = "syslinux" ]; then
+    parted -s "$LOOP" set 1 legacy_boot on
+  else
+    parted -s "$LOOP" set 1 boot on
+  fi
 # create part2
   echo "image: creating part2 on $DISK..."
   STORAGE_PART_START=$(( $SYSTEM_PART_END + 2048 ))
@@ -141,7 +148,7 @@ elif [ "$BOOTLOADER" = "bcm2835-bootloader" ]; then
   # create bootloader configuration
     echo "image: creating bootloader configuration..."
     cat << EOF > "$OE_TMP"/cmdline.txt
-boot=/dev/mmcblk0p1 disk=/dev/mmcblk0p2 quiet
+boot=/dev/mmcblk0p1 disk=/dev/mmcblk0p2 quiet $EXTRA_CMDLINE
 EOF
 
   # copy files
@@ -166,15 +173,21 @@ EOF
 elif [ "$BOOTLOADER" = "u-boot" ]; then
   # create bootloader configuration
     echo "image: creating bootloader configuration..."
-    if [ -f "$RELEASE_DIR/3rdparty/bootloader/uEnv.txt" ]; then
+    if [ -n "$UBOOT_SYSTEM" -a -f "$RELEASE_DIR/3rdparty/bootloader/uEnv-$UBOOT_SYSTEM.txt" ]; then
+      cp "$RELEASE_DIR/3rdparty/bootloader/uEnv-$UBOOT_SYSTEM.txt" "$OE_TMP/uEnv.txt"
+    elif [ -f "$RELEASE_DIR/3rdparty/bootloader/uEnv.txt" ]; then
       cp $RELEASE_DIR/3rdparty/bootloader/uEnv.txt "$OE_TMP"
     elif [ -f "$RELEASE_DIR/3rdparty/bootloader/boot.scr" ]; then
       cp $RELEASE_DIR/3rdparty/bootloader/boot.scr "$OE_TMP"
     fi
 
     echo "image: installing u-boot bootloader..."
-    if [ -f "$RELEASE_DIR/3rdparty/bootloader/SPL" ]; then
+    if [ -n "$UBOOT_SYSTEM" -a -f "$RELEASE_DIR/3rdparty/bootloader/SPL-$UBOOT_SYSTEM" ]; then
+      dd if="$RELEASE_DIR/3rdparty/bootloader/SPL-$UBOOT_SYSTEM" of="$DISK" bs=512 seek=2 conv=notrunc
+    elif [ -f "$RELEASE_DIR/3rdparty/bootloader/SPL" ]; then
       dd if="$RELEASE_DIR/3rdparty/bootloader/SPL" of="$DISK" bs=512 seek=2 conv=notrunc
+    elif [ -n "$UBOOT_SYSTEM" -a -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.imx" ]; then
+      dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.imx" of="$DISK" bs=512 seek=2 conv=notrunc
     elif [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot.imx" ]; then
       dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot.imx" of="$DISK" bs=512 seek=2 conv=notrunc
     fi
@@ -182,7 +195,10 @@ elif [ "$BOOTLOADER" = "u-boot" ]; then
     echo "image: copying files to part1..."
     cp $TARGET_IMG/$IMAGE_NAME.kernel "$OE_TMP/$KERNEL_NAME"
     cp $TARGET_IMG/$IMAGE_NAME.system "$OE_TMP/SYSTEM"
-    if [ -f $RELEASE_DIR/3rdparty/bootloader/u-boot.img ] ; then
+
+    if [ -n "$UBOOT_SYSTEM" -a -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.img" ]; then
+      cp "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.img" "$OE_TMP/u-boot.img"
+    elif [ -f $RELEASE_DIR/3rdparty/bootloader/u-boot.img ]; then
       cp $RELEASE_DIR/3rdparty/bootloader/u-boot.img "$OE_TMP"
     fi
 

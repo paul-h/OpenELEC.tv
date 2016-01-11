@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xorg-server"
-PKG_VERSION="1.16.4"
+PKG_VERSION="1.18.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -59,7 +59,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-xselinux \
                            --enable-aiglx \
                            --enable-glx-tls \
-                           --enable-registry \
                            $XORG_COMPOSITE \
                            --enable-mitshm \
                            --disable-xres \
@@ -113,6 +112,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-kdrive-mouse \
                            --disable-kdrive-evdev \
                            --disable-libunwind \
+                           --enable-xshmfence \
                            --disable-install-setuid \
                            --enable-unix-transport \
                            --disable-tcp-transport \
@@ -148,6 +148,11 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/lib/xorg
     cp -P $PKG_DIR/scripts/xorg-configure $INSTALL/usr/lib/xorg
+      . $ROOT/packages/x11/driver/xf86-video-nvidia/package.mk
+      sed -i -e "s|@NVIDIA_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
+      . $ROOT/packages/x11/driver/xf86-video-nvidia-legacy/package.mk
+      sed -i -e "s|@NVIDIA_LEGACY_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
+      . $ROOT/packages/x11/xserver/xorg-server/package.mk
 
   if [ ! "$OPENGL" = "no" ]; then
     if [ -f $INSTALL/usr/lib/xorg/modules/extensions/libglx.so ]; then

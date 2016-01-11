@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,9 @@ PKG_LONGDESC="Xorg-launch-helper is a small utility that transforms the X server
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-export LIBS="-lsystemd"
+pre_configure_target() {
+  export LIBS="-lsystemd"
+}
 
 post_makeinstall_target() {
   # do not install systemd services
