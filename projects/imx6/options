@@ -34,7 +34,7 @@
         ;;
     esac
 
-  # Bootloader to use (syslinux / u-boot / bcm2835-bootloader)
+  # Bootloader to use (syslinux / u-boot / bcm2835-firmware)
     BOOTLOADER="u-boot"
 
   # u-boot version to use (default)
@@ -48,8 +48,8 @@
   # Target Configfile for u-boot
     UBOOT_CONFIGFILE=""
 
-  # Kernel target for u-boot (default 'uImage' if BOOTLOADER=u-boot) (uImage / zImage)
-    KERNEL_UBOOT_TARGET="zImage"
+  # Kernel target
+    KERNEL_TARGET="zImage"
 
   # Kernel extra targets to build
     KERNEL_UBOOT_EXTRA_TARGET="imx6q-cubox-i.dtb imx6dl-cubox-i.dtb"
@@ -95,7 +95,7 @@
   # OpenGL(X) implementation to use (no / mesa)
     OPENGL="no"
 
-  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q)
+  # OpenGL-ES implementation to use (no / bcm2835-firmware / gpu-viv-bin-mx6q)
     OPENGLES="gpu-viv-bin-mx6q"
 
   # include uvesafb support (yes / no)
@@ -112,7 +112,7 @@
   # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
     GRAPHIC_DRIVERS=""
 
-  # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap)
+  # KODI Player implementation to use (default / bcm2835-firmware / libfslvpuwrap)
     KODIPLAYER_DRIVER="libfslvpuwrap"
 
   # Modules to install in initramfs for early boot
@@ -122,12 +122,12 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8188EU RTL8812AU dvbhdhomerun"
+    ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU dvbhdhomerun"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware iwlwifi-firmware dvb-firmware brcmfmac_sdio-firmware"
+    FIRMWARE="misc-firmware wlan-firmware iwlwifi-firmware dvb-firmware brcmfmac_sdio-firmware-imx"
 
   # build and install ATV IR remote support (yes / no)
     ATVCLIENT_SUPPORT="no"

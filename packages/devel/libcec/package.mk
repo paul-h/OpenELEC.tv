@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="libcec"
-PKG_VERSION="3.0.1"
+PKG_VERSION="6d68d21"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libcec.pulse-eight.com/"
-PKG_URL="https://github.com/Pulse-Eight/libcec/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="$PKG_NAME-$PKG_NAME-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain systemd lockdev platform"
+PKG_GIT_URL="https://github.com/Pulse-Eight/libcec.git"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain systemd lockdev p8-platform"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor"
@@ -33,18 +33,24 @@ PKG_LONGDESC="libCEC is an open-source dual licensed library designed for commun
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
+if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-firmware"
 fi
 
 if [ "$KODIPLAYER_DRIVER" = "libfslvpuwrap" ]; then
-  EXTRA_CMAKE_OPTS="-DHAVE_IMX_API=1"
+  EXTRA_CMAKE_OPTS="$EXTRA_CMAKE_OPTS -DHAVE_IMX_API=1"
 else
-  EXTRA_CMAKE_OPTS="-DHAVE_IMX_API=0"
+  EXTRA_CMAKE_OPTS="$EXTRA_CMAKE_OPTS -DHAVE_IMX_API=0"
+fi
+
+if [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
+  EXTRA_CMAKE_OPTS="$EXTRA_CMAKE_OPTS -DHAVE_AMLOGIC_API=1"
+else
+  EXTRA_CMAKE_OPTS="$EXTRA_CMAKE_OPTS -DHAVE_AMLOGIC_API=0"
 fi
 
 configure_target() {
-  if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
+  if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CXXFLAGS="$CXXFLAGS \
       -I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
       -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"

@@ -35,7 +35,7 @@
         ;;
     esac
 
-  # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-bootloader)
+  # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-firmware)
     BOOTLOADER="u-boot"
 
   # u-boot version to use (default)
@@ -47,8 +47,8 @@
   # Target Configfile for u-boot
     UBOOT_CONFIGFILE=""
 
-  # Kernel target for u-boot (default 'uImage' if BOOTLOADER=u-boot) (uImage / zImage)
-    KERNEL_UBOOT_TARGET="uImage-dtb"
+  # Kernel target
+    KERNEL_TARGET="uImage-dtb"
 
   # Kernel extra targets to build
     KERNEL_UBOOT_EXTRA_TARGET="wetek_play.dtd"
@@ -90,7 +90,7 @@
   # OpenGL(X) implementation to use (no / mesa)
     OPENGL="no"
 
-  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson6)
+  # OpenGL-ES implementation to use (no / bcm2835-firmware / gpu-viv-bin-mx6q / opengl-meson6)
     OPENGLES="opengl-meson6"
 
   # include uvesafb support (yes / no)
@@ -107,7 +107,7 @@
   # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
     GRAPHIC_DRIVERS=""
 
-  # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap / libamcodec)
+  # KODI Player implementation to use (default / bcm2835-firmware / libfslvpuwrap / libamcodec)
     KODIPLAYER_DRIVER="libamcodec"
 
   # Modules to install in initramfs for early boot
@@ -117,12 +117,12 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8188EU wetekdvb"
+    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS wetekdvb"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware brcmfmac_sdio-firmware"
+    FIRMWARE="misc-firmware wlan-firmware dvb-firmware brcmfmac_sdio-firmware-aml"
 
   # build and install ATV IR remote support (yes / no)
     ATVCLIENT_SUPPORT="no"

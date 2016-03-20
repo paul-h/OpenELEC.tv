@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="pvr.argustv"
-PKG_VERSION="3d8f13f"
+PKG_VERSION="c05bf4f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="https://github.com/kodi-pvr/pvr.argustv"
+PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform jsoncpp"
 PKG_PRIORITY="optional"
 PKG_SECTION=""

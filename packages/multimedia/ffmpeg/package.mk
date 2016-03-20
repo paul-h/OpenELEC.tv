@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2.8.4"
+PKG_VERSION="2.8.6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 libvorbis libressl dcadec"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 libvorbis libressl dcadec speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -53,6 +53,10 @@ if [ "$DEBUG" = yes ]; then
   FFMPEG_DEBUG="--enable-debug --disable-stripping"
 else
   FFMPEG_DEBUG="--disable-debug --enable-stripping"
+fi
+
+if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-firmware"
 fi
 
 case "$TARGET_ARCH" in
@@ -89,6 +93,11 @@ pre_configure_target() {
 
 # ffmpeg fails running with GOLD support
   strip_gold
+
+  if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
+    export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+  fi
 }
 
 configure_target() {
@@ -112,7 +121,7 @@ configure_target() {
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
-              --extra-libs="" \
+              --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
               --build-suffix="" \
               --disable-static \
@@ -126,7 +135,6 @@ configure_target() {
               $FFMPEG_PIC \
               --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
-              --disable-armv5te --disable-armv6t2 \
               --disable-extra-warnings \
               --disable-ffprobe \
               --disable-ffplay \
@@ -195,7 +203,7 @@ configure_target() {
               --disable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
-              --disable-libspeex \
+              --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \

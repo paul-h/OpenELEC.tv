@@ -6,8 +6,8 @@
 
 # Welcome Message for e.g. SSH Server (up to 5 Lines)
   GREETING0="##############################################"
-  GREETING1="# ................ OpenELEC ................ #"
-  GREETING2="# ........... http://openelec.tv ........... #"
+  GREETING1="#                  OpenELEC                  #"
+  GREETING2="#             http://openelec.tv             #"
   GREETING3="##############################################"
   GREETING4=""
 
@@ -20,13 +20,16 @@
 # Mediacenter to use (kodi / no)
   MEDIACENTER="kodi"
 
-# Skins to install (Confluence)
+# Skins to install (Estuary)
 # Space separated list is supported,
-# e.g. SKINS="Confluence"
-  SKINS="Confluence"
+# e.g. SKINS="Estuary"
+  SKINS=""
 
-# Default Skin (Confluence)
-  SKIN_DEFAULT="Confluence"
+# remove default skin included in Kodi (yes/no)
+  SKIN_REMOVE_SHIPPED="no"
+
+# Default Skin (Confluence, or any from above)
+  SKIN_DEFAULT="Estuary"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
@@ -60,7 +63,7 @@
 # for a list of additinoal drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU dvbhdhomerun"
+  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU dvbhdhomerun"
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
@@ -95,6 +98,9 @@
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
   KODI_SAMBA_SUPPORT="yes"
 
+# include initial language addons for Kodi (yes / no)
+  KODI_LANGUAGE_ADDONS="yes"
+
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
   NFS_SUPPORT="yes"
 
@@ -106,6 +112,12 @@
 
 # build and install SFTP Server (yes / no)
   SFTP_SERVER="yes"
+
+# build and install PPP support (yes / no)
+  PPTP_SUPPORT="yes"
+
+# build and install OpenVPN support (yes / no)
+  OPENVPN_SUPPORT="yes"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
@@ -137,9 +149,6 @@
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="yes"
-
-# build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="yes"
