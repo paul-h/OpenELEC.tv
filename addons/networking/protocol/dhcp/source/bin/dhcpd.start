@@ -1,3 +1,0 @@
-#!/bin/ash
-# configure startup command bellow
-dhcpd
