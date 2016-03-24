@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /storage/.kodi/addons/tools.p7zip/bin/7za.bin "$@"

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### Questions about OpenELEC?
 
 To get your questions answered, please ask in the OpenELEC [Forum], on IRC: 
@@ -47,6 +48,12 @@ As buildsystem / core packages (toolchain) / random libraries change from time t
 that you always do a clean build (make clean) before reporting build failures. Also make sure that you
 have a clean, unmodified git clone, we can't fix bugs caused by you failed to merge / rebase on
 your own fork.
+=======
+# Contributing Guide Lines
+
+Here is some guide lines for how you should add your addons to the un-official addons repo for OpenELEC.
+
+>>>>>>> 4e80fb33c89e103858e984a70c162d7fe9db504d
 
 ### Pull Requests
 
@@ -66,11 +73,19 @@ Please follow this process; it's the best way to get your work included in the p
 
 ```bash
    # clone your fork of the repo into the current directory in terminal
+<<<<<<< HEAD
    git clone git@github.com:<your username>/OpenELEC.tv.git
    # navigate to the newly cloned directory
    cd OpenELEC.tv
    # assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/OpenELEC/OpenELEC.tv.git
+=======
+   git clone git@github.com:<your username>/unofficial-addons.git
+   # navigate to the newly cloned directory
+   cd unofficial-addons
+   # assign the original repo to a remote called "upstream"
+   git remote add upstream https://github.com/OpenELEC/unofficial-addons.git
+>>>>>>> 4e80fb33c89e103858e984a70c162d7fe9db504d
    ```
 
 - If you cloned a while ago, get the latest changes from upstream:
@@ -103,9 +118,12 @@ Please follow this process; it's the best way to get your work included in the p
 
 - [Open a Pull Request](https://help.github.com/articles/using-pull-requests) with a
     clear title and description.
+<<<<<<< HEAD
 
 [Forum]: http://openelec.tv/forum
 [issue]: https://github.com/OpenELEC/OpenELEC.tv/issues
 [webchat]: http://openelec.tv/support/chat
 [logfiles]: http://wiki.openelec.tv/index.php?title=OpenELEC_FAQ#Support_Logs
 [similar issue]: https://github.com/OpenELEC/OpenELEC.tv/search?&ref=cmdform&type=Issues
+=======
+>>>>>>> 4e80fb33c89e103858e984a70c162d7fe9db504d
