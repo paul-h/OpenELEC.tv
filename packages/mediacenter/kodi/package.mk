@@ -33,16 +33,16 @@ PKG_AUTORECONF="no"
 
 case "$KODIPLAYER_DRIVER" in
   bcm2835-firmware)
-    PKG_VERSION="dde5510"
-    PKG_GIT_URL="https://github.com/popcornmix/xbmc.git"
+    PKG_VERSION="67cf03a"
+    PKG_GIT_URL="https://github.com/OpenELEC/xbmc.git"
     PKG_GIT_BRANCH="newclock5"
-    PKG_KEEP_CHECKOUT="yes"
+    PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="aea2d0b"
-    PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
+    PKG_VERSION="2331b6e"
+    PKG_GIT_URL="https://github.com/OpenELEC/xbmc.git"
     PKG_GIT_BRANCH="master"
-    PKG_KEEP_CHECKOUT="yes"
+    PKG_KEEP_CHECKOUT="no"
     ;;
 esac
 
@@ -206,7 +206,6 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
     KODI_CXXFLAGS="$KODI_CXXFLAGS $BCM2835_INCLUDES"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
     KODI_CODEC="--enable-codec=imxvpu"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gpu-viv-g2d"
   elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
     KODI_CODEC="--enable-codec=amcodec"
   else
@@ -387,16 +386,12 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/xsessions
 
   # update addon manifest
-  xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" \
-    $INSTALL/usr/share/kodi/system/addon-manifest.xml || :
-  xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" \
-    $INSTALL/usr/share/kodi/system/addon-manifest.xml || :
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" \
-    $INSTALL/usr/share/kodi/system/addon-manifest.xml || :
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.openelec.tv" \
-    $INSTALL/usr/share/kodi/system/addon-manifest.xml || :
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.openelec.settings" \
-    $INSTALL/usr/share/kodi/system/addon-manifest.xml || :
+    KODI_ADDON_MANIFEST="$INSTALL/usr/share/kodi/system/addon-manifest.xml"
+    xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" $KODI_ADDON_MANIFEST
+    xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" $KODI_ADDON_MANIFEST
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $KODI_ADDON_MANIFEST
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.openelec.tv" $KODI_ADDON_MANIFEST
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.openelec.settings" $KODI_ADDON_MANIFEST
 
   if [ ! "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
     # Rebrand
@@ -408,6 +403,8 @@ post_makeinstall_target() {
 
     mkdir -p $INSTALL/usr/share/kodi/addons/skin.estuary/media/icons/settings
     cp $PKG_DIR/media/openelec.png $INSTALL/usr/share/kodi/addons/skin.estuary/media/icons/settings
+  else
+    xmlstarlet ed -L -d "/addons/addon[text()='skin.estuary']" $KODI_ADDON_MANIFEST
   fi
 
   mkdir -p $INSTALL/usr/share/kodi/addons

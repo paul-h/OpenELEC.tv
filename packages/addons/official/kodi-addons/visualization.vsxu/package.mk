@@ -16,23 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="audiodecoder.wsr"
-PKG_VERSION="f5aff29"
+PKG_NAME="visualization.vsxu"
+PKG_VERSION="990332f"
 PKG_REV="1"
-PKG_ARCH="any"
+PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/notspiff/audiodecoder.wsr"
-PKG_GIT_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/notspiff/visualization.vsxu"
+PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
 PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain kodi-platform"
+PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
 PKG_PRIORITY="optional"
 PKG_SECTION=""
-PKG_SHORTDESC="audiodecoder.wsr"
-PKG_LONGDESC="audiodecoder.wsr"
+PKG_SHORTDESC="visualization.vsxu"
+PKG_LONGDESC="visualization.vsxu"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="kodi.audiodecoder"
+PKG_ADDON_TYPE="xbmc.player.musicviz"
 
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \

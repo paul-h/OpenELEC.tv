@@ -16,34 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="visualization.vsxu"
-PKG_VERSION="990332f"
+PKG_NAME="audiodecoder.asap"
+PKG_VERSION="6440d55"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/notspiff/visualization.vsxu"
-PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
+PKG_SITE="https://github.com/notspiff/audiodecoder.asap"
+PKG_GIT_URL="https://github.com/notspiff/audiodecoder.asap"
 PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
+PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_PRIORITY="optional"
 PKG_SECTION=""
-PKG_SHORTDESC="visualization.vsxu"
-PKG_LONGDESC="visualization.vsxu"
+PKG_SHORTDESC="audiodecoder.asap"
+PKG_LONGDESC="audiodecoder.asap"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.player.musicviz"
-
-if [ "$OPENGL" = "no" ] ; then
-  exit 0
-fi
-
-# dont build and upload for repos for now
-# TODO fix
-# undefined symbol: mt_32_to_double
-# vis.vsxu also not linked against libGL ?
-
-exit 0
+PKG_ADDON_TYPE="kodi.audiodecoder"
 
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
